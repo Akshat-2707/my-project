@@ -1,4 +1,3 @@
-/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -8,22 +7,30 @@
 body {
   font-family: Arial, sans-serif;
 }
-
-/* Grid layout */
+:root{
+  --bg-header-green: #4CAF50;
+  --bg-sidebar: #f0f0f0;
+  --bg-main: #ffffff;
+  --bg-footer-green: #4CAF50;
+  --text-light: #ffffff;
+  --text-dark: #000000;
+}
+input:checked~.dashboard {
+  --bg-header-green: #4CAF50;
+  --bg-sidebar: #f0f0f0;
+  --bg-main: #ffffff;
+  --bg-footer-green: #4CAF50;
+  --text-light: #ffffff;
+  --text-dark: #000000;
+}
 .dashboard {
   display: grid;
-  grid-template-areas:
-    "header header"
-    "sidebar main"
-    "footer footer";
-  grid-template-columns: 200px 1fr;
-  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 200px auto;
+  grid-template-rows: 70px 1fr 50px;
   min-height: 100vh;
 }
-
-/* Header */
 .header {
-  grid-area: header;
+ grid-column: 1 / 3; 
   background-color: #4CAF50;
   padding: 1rem;
   display: flex;
@@ -31,44 +38,35 @@ body {
   align-items: center;
   color: white;
 }
-
 .theme-switch {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-weight: bold;
 }
-
 .theme-switch input[type="checkbox"] {
   accent-color: white;
   cursor: pointer;
 }
-
-/* Sidebar */
 .sidebar {
-  grid-area: sidebar;
+  grid-column: 1 / 2; 
   background-color: #f0f0f0;
   padding: 1rem;
 }
-
 .sidebar a {
   text-decoration: none;
   color: #000;
   display: block;
   margin-bottom: 1rem;
 }
-
-/* Main Content */
 .main-content {
-  grid-area: main;
+  grid-column: 2 / 3; 
   padding: 2rem;
   background-color: white;
   color: black;
 }
-
-/* Footer */
 .footer {
-  grid-area: footer;
+  grid-column: 1 / 3;
   background-color: #4CAF50;
   text-align: center;
   padding: 0.75rem;
