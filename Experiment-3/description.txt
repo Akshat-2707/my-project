@@ -6,7 +6,7 @@ from light to using only CSS.
 <div class="dashboard"> : This is the main container that holds the full layout of the dashboard like the header
 sidebar, content area, and footer.
 
-<header class="header"> : This is the top part of the page where we show the title and the theme switch button.
+<header class="header"> : This is the top part of page where we show the title and the theme switch button.
 
 <h1>Admin Dashboard</h1> : Displays the main heading of the page saying Admin Dashboard.
 
