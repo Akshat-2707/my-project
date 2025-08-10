@@ -1,3 +1,23 @@
+:root {
+  --bg: white;
+  --text: black;
+  --header-bg: #4CAF50;
+  --footer-bg: #4CAF50;
+  --sidebar-bg: #f0f0f0;
+  --link-color: #0000ee;
+  --main-bg: white;
+}
+
+#themeSwitch:checked ~ .dashboard {
+  --bg: #121212;
+  --text: white;
+  --header-bg: #2f8f4e;
+  --footer-bg: #2f8f4e;
+  --sidebar-bg: #2a2a2a;
+  --link-color: white;
+  --main-bg: #1e1e1e;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -6,68 +26,76 @@
 
 body {
   font-family: Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
 }
-:root{
-  --bg-header-green: #4CAF50;
-  --bg-sidebar: #f0f0f0;
-  --bg-main: #ffffff;
-  --bg-footer-green: #4CAF50;
-  --text-light: #ffffff;
-  --text-dark: #000000;
-}
-input:checked~.dashboard {
-  --bg-header-green: #4CAF50;
-  --bg-sidebar: #f0f0f0;
-  --bg-main: #ffffff;
-  --bg-footer-green: #4CAF50;
-  --text-light: #ffffff;
-  --text-dark: #000000;
-}
+
 .dashboard {
   display: grid;
-  grid-template-columns: 200px auto;
-  grid-template-rows: 70px 1fr 50px;
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: auto 1fr auto;
   min-height: 100vh;
 }
+
 .header {
- grid-column: 1 / 3; 
-  background-color: #4CAF50;
+  grid-area: header;
+  background-color: var(--header-bg);
   padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: white;
 }
+
 .theme-switch {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-weight: bold;
-}
-.theme-switch input[type="checkbox"] {
-  accent-color: white;
+  color: white;
   cursor: pointer;
 }
+
+.theme-switch .box {
+  width: 18px;
+  height: 18px;
+  border: 2px solid white;
+  display: inline-block;
+  background-color: transparent;
+  transition: background-color 0.3s;
+}
+
+#themeSwitch:checked ~ .dashboard .theme-switch .box {
+  background-color: white;
+}
+
 .sidebar {
-  grid-column: 1 / 2; 
-  background-color: #f0f0f0;
+  grid-area: sidebar;
+  background-color: var(--sidebar-bg);
   padding: 1rem;
 }
+
 .sidebar a {
   text-decoration: none;
-  color: #000;
+  color: var(--link-color);
   display: block;
   margin-bottom: 1rem;
 }
+
 .main-content {
-  grid-column: 2 / 3; 
+  grid-area: main;
   padding: 2rem;
-  background-color: white;
-  color: black;
+  background-color: var(--main-bg);
+  color: var(--text);
 }
+
 .footer {
-  grid-column: 1 / 3;
-  background-color: #4CAF50;
+  grid-area: footer;
+  background-color: var(--footer-bg);
   text-align: center;
   padding: 0.75rem;
   color: white;
