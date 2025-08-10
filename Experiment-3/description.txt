@@ -14,7 +14,7 @@ sidebar, content area, and footer.
 
 <label for="themeSwitch">:A label linked to the hidden checkbox. When clicked it turns the dark mode on or off.
 
-<span class="box"></span> Dark Mode :Shows  small box and the text Dark Mode to change the theme.
+<span class="box"></span> Dark Mode :Shows small box and the text Dark Mode to change the theme.
 
 <aside class="sidebar">: This is the sidebar on the left used for navigation links.
 
