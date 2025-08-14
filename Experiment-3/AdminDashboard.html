@@ -5,39 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Dashboard</title>
   <link rel="stylesheet" href="style.css" />
+
 </head>
 <body>
-
-  <!-- Theme Toggle Checkbox -->
-  <input type="checkbox" id="themeSwitch" hidden />
-
-  <div class="dashboard">
-
-    <header class="header">
+  <div class="theme-wrapper">
+    <header>
       <h1>Admin Dashboard</h1>
-      <div class="theme-switch">
-        <label for="themeSwitch">
-          <span class="box"></span> Dark Mode
-        </label>
-      </div>
+      <label for="darktheme" style="display: flex; align-items: center; gap: 6px;">
+        <input type="checkbox" id="darktheme" />
+        Dark Mode
+      </label>
     </header>
 
-    <aside class="sidebar">
-      <a href="#">Home</a>
-      <a href="#">Users</a>
-      <a href="#">Settings</a>
-    </aside>
+    <nav class="sidebar">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Users</a></li>
+        <li><a href="#">Settings</a></li>
+      </ul>
+    </nav>
 
-    <main class="main-content">
-      <h2>Welcome, Admin!</h2>
+    <main>
+      <h3>Welcome, Admin!</h3>
       <p>This is the main content area. Add charts, tables, or reports here.</p>
     </main>
 
-    <footer class="footer">
-      &copy; 2025 Admin Panel
+    <footer>
+      <p>&copy; 2025 Admin Panel.</p>
     </footer>
-
   </div>
-
 </body>
 </html>

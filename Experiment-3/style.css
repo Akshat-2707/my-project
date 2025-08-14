@@ -1,23 +1,25 @@
 :root {
-  --bg: white;
-  --text: black;
-  --header-bg: #4CAF50;
-  --footer-bg: #4CAF50;
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --header-bg: #34b034;
+  --footer-bg: #34b034;
   --sidebar-bg: #f0f0f0;
-  --link-color: #0000ee;
-  --main-bg: white;
+  --main-bg: #ffffff;
+  --link-color: #4b0082;
 }
 
-#themeSwitch:checked ~ .dashboard {
-  --bg: #121212;
-  --text: white;
-  --header-bg: #2f8f4e;
-  --footer-bg: #2f8f4e;
+/* DARK MODE applied when checkbox is checked */
+.theme-wrapper:has(#darktheme:checked) {
+  --bg-color: #1a1a1a;
+  --text-color: #ffffff;
+  --header-bg: #2d2d2d;
+  --footer-bg: #1e1e1e;
   --sidebar-bg: #2a2a2a;
-  --link-color: white;
-  --main-bg: #1e1e1e;
+  --main-bg: #1c1c1c;
+  --link-color: #9f7aea;
 }
 
+/* Reset and base styles */
 * {
   margin: 0;
   padding: 0;
@@ -25,23 +27,25 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
-  background-color: var(--bg);
-  color: var(--text);
+  font-family: sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0;
 }
 
-.dashboard {
+.theme-wrapper {
   display: grid;
+  grid-template-columns: 200px 1fr;
+  grid-template-rows: auto 1fr auto;
   grid-template-areas:
     "header header"
     "sidebar main"
     "footer footer";
-  grid-template-columns: 200px 1fr;
-  grid-template-rows: auto 1fr auto;
-  min-height: 100vh;
+  height: 100vh;
 }
 
-.header {
+/* Header */
+header {
   grid-area: header;
   background-color: var(--header-bg);
   padding: 1rem;
@@ -51,52 +55,48 @@ body {
   color: white;
 }
 
-.theme-switch {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: bold;
-  color: white;
-  cursor: pointer;
-}
-
-.theme-switch .box {
-  width: 18px;
-  height: 18px;
-  border: 2px solid white;
-  display: inline-block;
-  background-color: transparent;
-  transition: background-color 0.3s;
-}
-
-#themeSwitch:checked ~ .dashboard .theme-switch .box {
-  background-color: white;
-}
-
+/* Sidebar */
 .sidebar {
   grid-area: sidebar;
   background-color: var(--sidebar-bg);
   padding: 1rem;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 
 .sidebar a {
-  text-decoration: none;
   color: var(--link-color);
-  display: block;
+  text-decoration: underline;
   margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
 
-.main-content {
+/* Main Content */
+main {
   grid-area: main;
-  padding: 2rem;
   background-color: var(--main-bg);
-  color: var(--text);
+  padding: 2rem;
+  border: 1px solid black;
+  color: var(--text-color); 
 }
 
-.footer {
+main h3 {
+  margin-bottom: 0.8rem; /* Space before paragraph */
+}
+
+/* Footer */
+footer {
   grid-area: footer;
   background-color: var(--footer-bg);
-  text-align: center;
-  padding: 0.75rem;
   color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Checkbox styling */
+#darktheme {
+  transform: scale(1.2);
+  accent-color: var(--link-color);
 }

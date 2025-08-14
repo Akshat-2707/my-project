@@ -15,4 +15,4 @@ HTML:
  I also styled the heading to make the balance amount look clear.
  The heading that shows the balance is made bigger and darker for clear visibility. 
  I also styled both buttons with padding, rounded edges. 
- The Deposit button is green to show  positive action, and the Withdraw button is red to show money being taken out.
+ The Deposit button is green to show positive action, and the Withdraw button is red to show money being taken out.

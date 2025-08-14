@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Training Login — Simulation Only</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Locked down CSP for a single-file demo (browsers may relax in file://) -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'none'; img-src 'self' data:; style-src 'unsafe-inline'; script-src 'unsafe-inline' 'self'; base-uri 'none'; form-action 'none'">
+  <style>
+    :root{
+      --bg: #0f172a;           /* slate-900 */
+      --bg-accent: #111827;    /* gray-900 */
+      --card: #0b1220;         /* deep navy */
+      --ring: #1d4ed8;         /* royal blue */
+      --ring-2: #22d3ee;       /* cyan */
+      --text: #e5e7eb;         /* gray-200 */
+      --muted: #9ca3af;        /* gray-400 */
+      --danger: #f59e0b;       /* amber for banners */
+      --ok: #16a34a;           /* green */
+      --shadow: 0 20px 50px rgba(0,0,0,.45);
+      --radius: 18px;
+      --focus: 0 0 0 2px var(--bg), 0 0 0 4px var(--ring);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      font: 16px/1.45 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(34,211,238,.06), transparent 60%),
+        radial-gradient(900px 500px at 110% 10%, rgba(29,78,216,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg), var(--bg-accent));
+      display:grid;
+      place-items:center;
+      padding: 32px 16px;
+    }
+
+    /* Top banner making the purpose explicit */
+    .banner{
+      position: fixed;
+      top:0; left:0; right:0;
+      background: linear-gradient(90deg, #111827, #1f2937);
+      color: var(--text);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      padding: 10px 16px;
+      font-size: 14px;
+      letter-spacing:.2px;
+      z-index: 40;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .banner .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: var(--danger);
+      box-shadow: 0 0 0 4px rgba(245,158,11,.15), 0 0 16px rgba(245,158,11,.6);
+      flex:none;
+    }
+    .wrap{ width:100%; max-width: 420px; margin-top: 58px; }
+
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      margin: 0 0 14px 0;
+      user-select:none;
+    }
+    /* Pure CSS “shield lock” icon to feel enterprise-y without any logo */
+    .brand .shield{
+      position:relative;
+      width:44px; height:48px; border-radius:10px;
+      background: radial-gradient(120% 100% at 50% 0%, #1e3a8a, #0ea5e9);
+      box-shadow: inset 0 -10px 25px rgba(0,0,0,.35), 0 8px 18px rgba(0,0,0,.25);
+    }
+    .brand .shield::before{
+      content:""; position:absolute; inset:6px 9px 14px 9px; border-radius:8px;
+      background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.02));
+    }
+    .brand .shield::after{
+      /* lock glyph */
+      content:""; position:absolute; left:50%; top:50%; transform: translate(-50%,-40%);
+      width:18px; height:14px; border:2px solid rgba(255,255,255,.9); border-top:none; border-radius:3px;
+      box-shadow: 0 0 0 999px transparent;
+    }
+    .brand h1{
+      font-size: 18px; margin:0;
+      letter-spacing:.3px; font-weight: 650;
+      color: #f3f4f6;
+    }
+    .brand .sub{
+      font-size: 12px; color: var(--muted); margin-top:2px;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)), var(--card);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Diagonal watermark to keep it clearly non-deceptive */
+    .watermark{
+      position:absolute; inset:0;
+      background:
+        repeating-linear-gradient(-35deg,
+          transparent 0 42px,
+          rgba(255,255,255,.03) 42px 60px),
+        repeating-linear-gradient(35deg,
+          transparent 0 42px,
+          rgba(255,255,255,.03) 42px 60px);
+      pointer-events:none;
+    }
+    .watermark::after{
+      content:"SIMULATION ONLY • DO NOT ENTER REAL CREDENTIALS";
+      position:absolute; inset:auto auto 14px 50%;
+      transform: translateX(-50%) rotate(-2deg);
+      font-weight:700; letter-spacing:.12em;
+      font-size: 11px; color: rgba(255,255,255,.55);
+      text-shadow: 0 1px 0 rgba(0,0,0,.5);
+      white-space:nowrap;
+    }
+
+    .headline{
+      display:flex; align-items:center; justify-content:space-between;
+      margin-bottom: 12px;
+    }
+    .headline .title{
+      font-size: 16px; font-weight: 650;
+    }
+    .headline .badge{
+      font-size: 11px; padding: 4px 8px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: rgba(34,211,238,.08);
+      color: #a5f3fc;
+    }
+
+    .field{
+      display:grid; gap:8px; margin: 14px 0;
+    }
+    label{
+      font-size: 12px; color: var(--muted);
+    }
+    input{
+      width:100%; padding: 12px 14px;
+      background: #0a1020;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      outline: none;
+      transition: box-shadow .15s ease, border-color .15s ease, background .15s ease;
+    }
+    input::placeholder{ color: #6b7280; }
+    input:focus{
+      border-color: rgba(34,211,238,.65);
+      box-shadow: var(--focus);
+      background: #0c1326;
+    }
+
+    .actions{ margin-top: 10px; display:flex; flex-direction:column; gap:10px; }
+    button{
+      all:unset; display:inline-flex; align-items:center; justify-content:center; gap:8px;
+      padding: 12px 16px; border-radius: 12px; cursor:pointer; user-select:none;
+      background: linear-gradient(90deg, var(--ring), var(--ring-2));
+      color:white; font-weight:700; letter-spacing:.2px;
+      box-shadow: 0 10px 20px rgba(34,211,238,.15), inset 0 1px 0 rgba(255,255,255,.15);
+      transition: transform .06s ease, filter .2s ease, box-shadow .2s ease;
+    }
+    button:active{ transform: translateY(1px) scale(.997); }
+    .hint{
+      font-size: 12px; color: var(--muted); text-align:center;
+    }
+
+    .foot{
+      margin-top: 16px; font-size: 11px; color: var(--muted);
+      display:flex; justify-content:space-between; align-items:center;
+    }
+    .foot .pill{
+      border: 1px solid rgba(255,255,255,.14);
+      padding: 6px 10px; border-radius: 999px;
+    }
+
+    /* Reduce motion if the user prefers */
+    @media (prefers-reduced-motion: no-preference){
+      .card{ animation: floatIn .35s ease-out both; }
+      @keyframes floatIn{
+        from{ transform: translateY(8px); opacity: 0 }
+        to{ transform: translateY(0); opacity: 1 }
+      }
+    }
+
+    /* High-contrast fallback for accessibility */
+    @media (forced-colors: active){
+      .banner, .card, input, button { border: 1px solid CanvasText; }
+      button { background: ButtonFace; color: ButtonText; }
+    }
+  </style>
+</head>
+<body>
+  <div class="banner" role="note" aria-live="polite">
+    <span class="dot" aria-hidden="true"></span>
+    <strong>Simulation:</strong>&nbsp;This page is for harmless phishing-simulation / security-model testing. <em>Do not enter real credentials.</em>
+  </div>
+
+  <div class="wrap">
+    <div class="brand" aria-hidden="true">
+      <div class="shield"></div>
+      <div>
+        <h1>NexaSecure Training</h1>
+        <div class="sub">Internal Authentication Mockup</div>
+      </div>
+    </div>
+
+    <section class="card" aria-labelledby="cardTitle">
+      <div class="watermark" aria-hidden="true"></div>
+
+      <div class="headline">
+        <div id="cardTitle" class="title">Account Login</div>
+        <div class="badge" aria-hidden="true">SIMULATION</div>
+      </div>
+
+      <form id="loginForm" novalidate autocomplete="off" aria-describedby="simNote">
+        <div class="field">
+          <label for="username">Username</label>
+          <input id="username" name="username" type="text" inputmode="email"
+                 placeholder="Enter username" required autocomplete="off" />
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password"
+                 placeholder="Enter password" required autocomplete="off" />
+        </div>
+
+        <div class="actions">
+          <button type="submit" aria-label="Login (simulation only)">
+            <!-- simple lock keyhole via css borders/spans avoided to stay self-contained -->
+            Login
+          </button>
+          <div id="simNote" class="hint">Submitting will not send or store data.</div>
+        </div>
+      </form>
+
+      <div class="foot" aria-hidden="true">
+        <div class="pill">Transport: TLS (Mock)</div>
+        <div>© NexaSecure • Training UI</div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    (function(){
+      const form = document.getElementById('loginForm');
+      form.addEventListener('submit', function(e){
+        e.preventDefault(); // Never send anything anywhere
+        // Explicit alert per requirements
+        alert("This is a harmless phishing simulation for testing purposes only.");
+        // Clear fields to avoid accidental retention
+        try {
+          const u = document.getElementById('username');
+          const p = document.getElementById('password');
+          if(u) u.value = "";
+          if(p) p.value = "";
+        } catch(_) {}
+      }, { passive: false });
+
+      // Basic keyguard: prevent Enter from submitting in some browsers
+      form.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' && (e.target.tagName === 'INPUT')) {
+          e.preventDefault();
+        }
+      });
+
+      // Ensure no accidental autocomplete caching
+      document.querySelectorAll('input').forEach(i => {
+        i.setAttribute('autocomplete','off');
+        i.setAttribute('autocapitalize','off');
+        i.setAttribute('autocorrect','off');
+        i.setAttribute('spellcheck','false');
+      });
+    })();
+  </script>
+</body>
+</html>
