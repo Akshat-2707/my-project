@@ -1,0 +1,46 @@
+This code is a small project that combines JavaScript classes and React. It mainly focuses on how we can use inheritance to create reusable and well-structured code.
+
+Person Class:
+
+This is the base class.
+
+It has two properties: name and age.
+
+Both students and teachers have these common features, so they are written only once in the Person class.
+
+Student Class:
+
+This class extends (inherits from) Person.
+
+Along with name and age, it also has an extra property called course.
+
+So every student object will store which course they are enrolled in.
+
+Teacher Class:
+
+This class also extends Person.
+
+It adds a new property called subject.
+
+So every teacher object will store which subject they teach.
+
+React App Component:
+
+Inside the App function, one object of Student and one object of Teacher are created.
+
+Example: Student('Student', 20, 'Course') and Teacher('Teacher', 35, 'Subject').
+
+These objects hold data, which is then shown on the screen.
+
+The JSX (HTML-like code in React) is used to display student info (name, age, course) and teacher info (name, age, subject) in a neat format.
+
+Output:
+
+When the project runs, it shows a heading “Person Class Hierarchy”.
+
+Below that, it displays the student’s details and the teacher’s details separately.
+
+This makes it easy to understand how the data from objects created using classes is being displayed in a React application.
+
+In summary:
+This code is a simple demonstration of object-oriented programming with inheritance in JavaScript and how the created objects can be displayed inside a React UI. It helps to understand both class relationships and React rendering in a practical way.
