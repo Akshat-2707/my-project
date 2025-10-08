@@ -9,19 +9,19 @@ const players = [
 ];
 
 const PlayerList = () => {
-  const [searchRole, setSearchRole] = useState("");
+  const [searchName, setSearchName] = useState("");
 
   const filteredPlayers = players.filter((player) =>
-    player.role.toLowerCase().includes(searchRole.toLowerCase())
+    player.name.toLowerCase().includes(searchName.toLowerCase())
   );
 
   return (
     <div>
       <input
         type="text"
-        placeholder="Search by role..."
-        value={searchRole}
-        onChange={(e) => setSearchRole(e.target.value)}
+        placeholder="Search by name..."
+        value={searchName}
+        onChange={(e) => setSearchName(e.target.value)}
         style={{ padding: "8px", width: "200px", marginBottom: "20px" }}
       />
 

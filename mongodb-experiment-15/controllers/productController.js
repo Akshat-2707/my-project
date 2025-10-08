@@ -1,8 +1,7 @@
 // controllers/productController.js
 
-const Product = require("../models/Product"); // Product Model ko import karein
+const Product = require("../models/Product"); 
 
-// 1. Product Jodne Ka Logic (POST /api/products/add)
 exports.addProduct = async (req, res) => {
     try {
         const productData = req.body;
@@ -26,13 +25,13 @@ exports.addProduct = async (req, res) => {
 };
 
 
-// 2. SABHI PRODUCTS NIKALNE KA LOGIC (GET /api/products)
+
 exports.getProducts = async (req, res) => {
     try {
-        // MongoDB se sabhi products nikaalo
+      
         const products = await Product.find({});
         
-        // Products Postman ko bhej do
+  
         res.status(200).json(products);
     } catch (error) {
         console.error("Error fetching all products:", error);
@@ -41,7 +40,7 @@ exports.getProducts = async (req, res) => {
 };
 
 
-// 3. Category se Products Nikalne Ka Logic (GET /api/products/category/:category)
+
 exports.getProductsByCategory = async (req, res) => {
     try {
         const category = req.params.category;
@@ -59,7 +58,6 @@ exports.getProductsByCategory = async (req, res) => {
 };
 
 
-// 4. Variant Details Nikalne Ka Logic (GET /api/products/variants/:id)
 exports.getVariantDetails = async (req, res) => {
     try {
         const productId = req.params.id;
